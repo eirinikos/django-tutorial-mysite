@@ -2,4 +2,76 @@
 
 Not much to see here - just a repo with commits that document the steps I'm taking with my first foray in [Django](https://www.djangoproject.com/). This is an effort to familiarize myself with standard Django lingo and with the Django paradigm.
 
-Read my commit history to get an understanding of the material that's covered in each part of [this Django tutorial](https://docs.djangoproject.com/en/2.0/intro/tutorial01/).
+Read my commit history and the rest of this README to get a condensed understanding of the material that's covered in each part of [this Django tutorial](https://docs.djangoproject.com/en/2.0/intro/tutorial01/).
+
+Run `python manage.py shell` to invoke the Python shell and interact with the object-relational mapper:
+
+    # Import and make use of the Question and Choice models:
+    >>> from polls.models import Question, Choice
+    
+    # Import other Django modules:
+    >>> from django.utils import timezone
+    
+    # Create a new Question:
+    >>> q = Question(question_text="WHAT'S UP, MATE?",
+    pub_date=timezone.now())
+    
+    # Save the object to the database:
+    >>> q.save()
+    
+    # Access the ID for an object:
+    >>> q.id
+
+    # Access model field values via Python attributes:
+    >>> q.question_text
+    >>> q.pub_date
+
+    # Change values by resetting the attributes:
+    # (Make sure to call save() explicitly!)
+    >>> q.question_text = "WHAT'S NEW, MATE?"
+    >>> q.save()
+
+    # Return all class members:
+    >>> Question.objects.all()
+    >>> Choice.objects.all()
+    
+    # Take advantage of Django's database lookup API:
+    >>> Question.objects.filter(id=1)
+    >>> Question.objects.filter(question_text__startswith='WHAT')
+
+    # Get the question that was published this year:
+    >>> current_year = timezone.now().year
+    >>> Question.objects.get(pub_date__year=current_year)
+
+    # Get the question that matches the given ID:
+    >>> Question.objects.get(id=1)
+
+    # Get the [same] question by primary-key lookup:
+    >>> Question.objects.get(pk=1)
+
+    # Access custom methods:
+    >>> q = Question.objects.get(pk=1)
+    >>> q.was_published_recently()
+
+    # Return a question's choice_set:
+    >>> q.choice_set.all()
+    >>> q.choice_set.count()
+
+    # Call `create` on a question's choice_set:
+    >>> q.choice_set.create(choice_text="I'M BEACHED AS!", votes=0)
+    >>> q.choice_set.create(choice_text="I can't chew!", votes=0)
+    >>> q.choice_set.create(choice_text="I need to get wet, ASAP!", votes=0)
+
+    # (`create` constructs a new Choice object, does the INSERT statement,
+    # adds the choice to the set of available choices, and returns the new
+    # Choice object)
+
+    # Access a Choice object's related Question object:
+    # c = Choice.objects.get(pk=3)
+    # c.question
+
+    # Find all Choices for any question whose pub_date is in this year:
+    # Choice.objects.filter(question__pub_date__year=current_year)
+
+    # Delete a choice:
+    # c.delete()
