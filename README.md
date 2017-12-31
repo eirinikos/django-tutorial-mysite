@@ -4,7 +4,8 @@ Not much to see here - just a repo with commits that document the steps I'm taki
 
 Read my commit history and the rest of this README to get a condensed understanding of the material that's covered in each part of [this Django tutorial](https://docs.djangoproject.com/en/2.0/intro/tutorial01/).
 
-Run `python manage.py shell` to invoke the Python shell and interact with the object-relational mapper:
+### The Django ORM
+Run `python manage.py shell` to invoke the Python shell and interact with the object-relational mapper. (Sample questions and choices are inspired by [this](http://www.postkiwi.com/2008/beached-whale-in-new-zealand/)).
 
     # Import and make use of the Question and Choice models:
     >>> from polls.models import Question, Choice
@@ -75,3 +76,23 @@ Run `python manage.py shell` to invoke the Python shell and interact with the ob
 
     # Delete a choice:
     # c.delete()
+
+### Django admin interface
+* Create an admin user with the following command:
+`python manage.py createsuperuser`
+
+* Follow the prompts to create login credentials for that user.
+
+* Start the development server with:
+`python manage.py runserver`
+
+* Go to `/admin/` in your browser - e.g., [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
+
+To make the app modifiable in the admin interface, update its admin file to include an import and registration statement for each model:
+
+    # polls/admin.py
+    from django.contrib import admin
+    from .models import Question, Choice
+   
+    admin.site.register(Question)
+    admin.site.register(Choice)
