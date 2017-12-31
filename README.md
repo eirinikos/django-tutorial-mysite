@@ -5,7 +5,7 @@ Not much to see here - just a repo with commits that document the steps I'm taki
 Read my commit history and the rest of this README to get a condensed understanding of the material that's covered in each part of [this Django tutorial](https://docs.djangoproject.com/en/2.0/intro/tutorial01/).
 
 ### The Django ORM
-Run `python manage.py shell` to invoke the Python shell and interact with the object-relational mapper. (Sample questions and choices are inspired by [this](http://www.postkiwi.com/2008/beached-whale-in-new-zealand/)).
+Run `python manage.py shell` to invoke the Python shell and interact with the object-relational mapper. (Sample questions and choices are inspired by [this](http://www.postkiwi.com/2008/beached-whale-in-new-zealand/).)
 
     # Import and make use of the Question and Choice models:
     >>> from polls.models import Question, Choice
