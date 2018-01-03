@@ -2,7 +2,9 @@
 
 Not much to see here - just a repo with commits that document the steps I'm taking with my first foray in [Django](https://www.djangoproject.com/). This is an effort to familiarize myself with standard Django lingo and with the Django paradigm.
 
-Read my commit history and the rest of this README to get a condensed understanding of the material that's covered in each part of [this Django tutorial](https://docs.djangoproject.com/en/2.0/intro/tutorial01/).
+Read my commit history and the rest of this README to get a condensed understanding of the material that's covered in each part of [this Django tutorial](https://docs.djangoproject.com/en/2.0/intro/tutorial01/). My primary motivation for this repo is the desire to write about my learning process so that Future Me has a handy journal to re-read someday.
+
+I *could* use my personal blog for this purpose, but I enjoy the challenge of keeping things focused, clear, and pithy - i.e., in the restrictive format of a commit message or a well-outlined README doc. Because learning is an iterative process, it makes sense to track it with Git. Per [these guidelines](https://git-scm.com/book/en/v2/Distributed-Git-Contributing-to-a-Project), I stick with the imperative present tense in the commit message header. As for the body of each commit, I'm still experimenting with writing quality messages that explain more *why* than *how*. For this reason, the messages themselves are less contained, more freewheeling and varied in tone and tense.
 
 ### The Django ORM
 Run `python manage.py shell` to invoke the Python shell and interact with the object-relational mapper. (Sample questions and choices are inspired by [this](http://www.postkiwi.com/2008/beached-whale-in-new-zealand/).)
@@ -48,10 +50,9 @@ Run `python manage.py shell` to invoke the Python shell and interact with the ob
     >>> Question.objects.get(id=1)
 
     # Get the [same] question by primary-key lookup:
-    >>> Question.objects.get(pk=1)
+    >>> q = Question.objects.get(pk=1)
 
     # Access custom methods:
-    >>> q = Question.objects.get(pk=1)
     >>> q.was_published_recently()
 
     # Return a question's choice_set:
