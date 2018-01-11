@@ -46,6 +46,9 @@ Run `python manage.py shell` to invoke the Python shell and interact with the ob
     >>> current_year = timezone.now().year
     >>> Question.objects.get(pub_date__year=current_year)
 
+    # (`get()` expects to find and return only one object, whereas
+    # `filter()` serves to return a QuerySet, i.e., a collection)
+
     # Get the question that matches the given ID:
     >>> Question.objects.get(id=1)
 
