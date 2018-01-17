@@ -7,6 +7,11 @@ from .models import Question, Choice
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
+
+    # when we want to override ListView's automatically
+    # generated context variable `question_list`, we can
+    # employ the `context_object_name` attribute to
+    # specify a context variable of our own
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
