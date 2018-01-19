@@ -6,8 +6,43 @@ Read my commit history and the rest of this README to get a condensed understand
 
 I *could* use my personal blog for this purpose, but I enjoy the challenge of keeping things focused, clear, and pithy - i.e., in the restrictive format of a commit message or a well-outlined README doc. Because learning is an iterative process, it makes sense to track it with Git. Per [these guidelines](https://git-scm.com/book/en/v2/Distributed-Git-Contributing-to-a-Project), I stick with the imperative present tense in the commit message header. As for the body of each commit, I'm still experimenting with writing quality messages that explain more *why* than *how*. For this reason, the messages themselves are less contained, more freewheeling and varied in tone and tense.
 
+### Running tests & interacting with the Django test client
+Run tests for the Polls app with `python manage.py test polls`.
+
+Run `python manage.py shell` to invoke the Python shell and interact with Django's test [Client](https://docs.djangoproject.com/en/2.0/topics/testing/tools/#django.test.Client). (`manage.py` sets the `DJANGO_SETTINGS_MODULE` environment variable, which gives Django the Python import path to `mysite/settings.py`.)
+
+Interacting with `django.test.Client` allows you to simulate user interactions with code at the view level. It can be used in `tests.py` as well as in the shell. However, our `tests.py` file already uses the `django.test.TestCase` class, which comes with its own client. (Therefore, there's no need to import the test client class there.)
+
+In the shell, you'll need to set up the test environment. `setup_test_environment()` installs a template renderer that allows us to examine attributes on responses that otherwise wouldn't be available (e.g., `response.context`). Note that `setup_test_environment` **does not** set up a test database.
+
+    >>> from django.test.utils import setup_test_environment
+    >>> setup_test_environment
+
+After setting up the test environment, import the test client class, create an instance of the client, and get to testing!
+
+    >>> from django.test import Client
+    >>> client = Client()
+
+    # Get a response from '/'
+    >>> response = client.get('/')
+    Not Found: /
+
+    >>> response.status_code
+    404
+
+    >>> from django.urls import reverse
+    >>> response = client.get(reverse('polls:index'))
+    >>> response.status_code
+    200
+
+    >>> response.content
+    b'\n    <ul>\n    \n        <li><a href="/polls/5/">Are you pretty parched?</a></li>\n    \n        <li><a href="/polls/4/">Do you happen to have a bucket or a hose, bro?</a></li>\n    \n        <li><a href="/polls/3/">Do you have any plankton?</a></li>\n    \n        <li><a href="/polls/2/">Want a chip, bro?</a></li>\n    \n        <li><a href="/polls/1/">WHAT&#39;S UP, MATE?</a></li>\n    \n    </ul>\n\n'
+
+    >>> response.context['latest_question_list']
+    <QuerySet [<Question: Are you pretty parched?>, <Question: Do you happen to have a bucket or a hose, bro?>, <Question: Do you have any plankton?>, <Question: Want a chip, bro?>, <Question: WHAT'S UP, MATE?>]>
+
 ### The Django ORM
-Run `python manage.py shell` to invoke the Python shell and interact with the object-relational mapper. (Sample questions and choices are inspired by [this](http://www.postkiwi.com/2008/beached-whale-in-new-zealand/).)
+You can also interact with the object-relational mapper within the shell. (Sample questions and choices are inspired by [this](http://www.postkiwi.com/2008/beached-whale-in-new-zealand/).)
 
     # Import and make use of the Question and Choice models:
     >>> from polls.models import Question, Choice
@@ -81,7 +116,7 @@ Run `python manage.py shell` to invoke the Python shell and interact with the ob
     # Delete a choice:
     # c.delete()
 
-### Django admin interface
+### The Django admin interface
 * Create an admin user with the following command:
 `python manage.py createsuperuser`
 
